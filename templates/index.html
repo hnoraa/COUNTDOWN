@@ -1,0 +1,59 @@
+<!doctype html>
+<title>Countdown Timer</title>
+
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
+<style type="text/css">
+    body {
+        padding-top:100px;
+        font-family:'Courier New', Courier, monospace;
+        max-width:500px;
+        margin:auto;
+        background-color:lightgrey;
+    }
+    #refresh {
+        font-size:24pt;
+        color:chartreuse;
+        background-color:black;
+        padding:5px;
+        height:100%;
+    }
+    p {
+        color:purple;
+    }
+    small {
+        font-size:8pt;
+    }
+</style>
+
+<small>
+    <p>Countdown until I'm done being on call!</p>
+    <pre>
+        Current date: {{start}}
+        End date: {{end}}
+    </pre>
+</small>
+
+<div id="refresh">{{diff}}</div>
+<br />
+
+<small>
+    <form action="/get-date-range" method="post">
+        <div>
+            <label for="end">End date:</label>
+            {% set value=end %}
+            <input type="date" id="end" name="end-date" value="{{value}}"/>
+        </div>
+        <div>
+            <input type="submit">
+        </div>
+    </form>
+</small>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        setInterval(function() {
+            $("#refresh").load(document.URL +  ' #refresh');
+        }, 1000);
+    });
+</script>
