@@ -35,6 +35,12 @@ def index():
         startDate = datetime.now()
         dateDiff = endDate - startDate
         end = endDate.strftime(fullDate)
+
+    if dateDiff == 0:
+        # countdown has reached end
+        diff = 'END!!!'
+        endDate = None
+        startDate = datetime.now()
     
     # render template
     return render_template('index.html', start=start, end=end, diff=diff)
@@ -58,11 +64,6 @@ def getDateRange():
 
     # get time difference
     dateDiff = endDate - startDate
-
-    # debug info
-    if localMode:
-        print('DEBUG: Form POST body end-date=%s' % request.form['end-date'])
-        print('DEBUG: dateDiff=%d, endDate=%d, startDate=%d' % (dateDiff, endDate, startDate))
 
     # redirect
     return redirect(url_for('index'))
