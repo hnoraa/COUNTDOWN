@@ -52,8 +52,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        // auto-refresh the #refresh section of the page every 1 second
         setInterval(function() {
-            $("#refresh").load(document.URL +  ' #refresh');
+            $("#refresh").load(document.URL + ' #refresh');
         }, 1000);
     });
 </script>

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 endDate = None
 startDate = datetime.now()
 dateDiff = 0
+localMode = False
 
 # instantiate Flask framework
 app = Flask(__name__)
@@ -41,8 +42,6 @@ def getDateRange():
 
     # end date, if date time is not set in post body
     if request.form['end-date'] is not '' and request.form['end-date'] is not None and len(request.form['end-date']) > 0:
-        print('Request Form Date Length: %d' % len(request.form['end-date']))
-        print('Request Form Date: ' + request.form['end-date'])
         endDate = datetime.strptime(request.form['end-date'], '%Y-%m-%d')
         endDate.replace(minute=0, hour=0, second=0, microsecond=0)
         endDate = endDate + timedelta(hours=7)
@@ -55,5 +54,9 @@ def getDateRange():
 
 if __name__ == '__main__':
     # RUN!!!!!
-    # app.run(host='0.0.0.0', port=9090)
-    app.run(port=9091)
+    if localMode == False:
+        # allow others to connect
+        app.run(host='0.0.0.0', port=9090)
+    else:
+        # run on localhost
+        app.run(port=9090)
